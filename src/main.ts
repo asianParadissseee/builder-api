@@ -1,9 +1,23 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import * as process from "process";
+import { configDotenv } from "dotenv";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {cors: false});
-  app.enableCors({credentials: true, origin: true})
-  await app.listen(4040);
+  configDotenv()
+  const PORT = process.env.PORT
+  const app = await NestFactory.create(AppModule, { cors: false });
+  app.enableCors({ credentials: true, origin: true });
+  const config = new DocumentBuilder()
+    .setTitle("Builder Api")
+    .setDescription("This api for ecommerce shop of build cards")
+    .setVersion("1.0")
+    .addTag("builder")
+    .build();
+  const doc = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("docs", app, doc);
+  await app.listen(PORT, ()=> console.log(`SERVER STARTED ON PORT https://localhost:${PORT}`));
 }
+
 bootstrap();
