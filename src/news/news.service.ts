@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { CreateNewsDto } from './dto/create-news.dto';
-import { UpdateNewsDto } from './dto/update-news.dto';
+import { Injectable } from "@nestjs/common";
+import { CreateNewsDto } from "./dto/create-news.dto";
+import { UpdateNewsDto } from "./dto/update-news.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { News } from "./entities/news.entity";
 import { Model } from "mongoose";
@@ -10,16 +10,18 @@ import { Model } from "mongoose";
 export class NewsService {
   constructor(@InjectModel(News.name) private newsModel: Model<News>) {
   }
+
   create(createNewsDto: CreateNewsDto) {
-    return 'This action adds a new news';
+    const news = new this.newsModel(createNewsDto);
+    return news.save();
   }
 
-  findAll() {
-    return `This action returns all news`;
+  async findAll() {
+    return await this.newsModel.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} news`;
+    return this.newsModel.findOne({id: id});
   }
 
   update(id: number, updateNewsDto: UpdateNewsDto) {
