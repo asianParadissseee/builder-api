@@ -12,7 +12,6 @@ export class NewsController {
   @Post()
   @UsePipes(new ValidationPipe())
   create(@Body() createNewsDto: CreateNewsDto) {
-    console.log(createNewsDto);
     return this.newsService.create(createNewsDto);
   }
 

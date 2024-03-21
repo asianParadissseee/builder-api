@@ -7,21 +7,21 @@ export class UpdateNewsDto extends PartialType(CreateNewsDto) {
     description: "URL картинки",
     type: "string"
   })
-  private readonly backgroundImage: string;
+  backgroundImage: string;
   @ApiProperty({
     description: "Заголовок картинки",
     type: "string"
   })
-  private readonly title: string;
+    title: string;
   @ApiProperty({
     description: "Описание картинки",
     type: "string"
   })
-  private readonly description: string;
+    description: string;
   @ApiProperty({
     description: "Описание на id картинки",
     type: "string",
     required: false
   })
-  private readonly subDescription?: string;
+    subDescription?: string;
 }
