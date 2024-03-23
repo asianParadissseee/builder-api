@@ -28,19 +28,27 @@ export class NewsService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     try {
-      return await this.newsModel.findOne({ id: id });
+      return await this.newsModel.findById(id);
     } catch (e) {
       throw new NotFoundException(`Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
     }
   }
 
-  update(id: number, updateNewsDto: UpdateNewsDto) {
-    return `This action updates a #${id} news`;
+  async update(id: number, updateNewsDto: UpdateNewsDto) {
+    try {
+      // return await  this.newsModel.updateOne(id, updateNewsDto)
+    } catch (e) {
+
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} news`;
+  async remove(id: number) {
+    try {
+      return await this.newsModel.deleteOne({ id });
+    } catch (e) {
+
+    }
   }
 }
