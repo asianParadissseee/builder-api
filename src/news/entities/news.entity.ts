@@ -10,5 +10,7 @@ export class News {
   description: string;
   @Prop({ required: false })
   subDescription?: string;
+  @Prop({default: Date.now})
+  createAt: Date
 }
 export const NewsSchema = SchemaFactory.createForClass(News)
