@@ -44,17 +44,17 @@ export class NewsService {
     try {
       return await this.newsModel.findByIdAndUpdate(id, updateNewsDto);
     } catch (e) {
-      throw new BadRequestException(`Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
+      throw new BadRequestException(`Ошибка изменения новости с ${id}, либо новость с таким ${id} не найдено`);
     }
   }
 
   async remove(id: string) {
     const isValid = mongoose.Types.ObjectId.isValid(id);
-    if (!isValid) throw new BadRequestException(`Не валидный id.Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
+    if (!isValid) throw new BadRequestException(`Не валидный id.Ошибка удаление новости с ${id}, либо новость с таким ${id} не найдено`);
     try {
       return await this.newsModel.findByIdAndDelete(id);
     } catch (e) {
-      throw new BadRequestException(`Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
+      throw new BadRequestException(`Ошибка удаления новости с ${id}, либо новость с таким ${id} не найдено`);
     }
   }
 }
