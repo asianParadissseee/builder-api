@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateNewsDto } from './create-news.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateNewsDto extends PartialType(CreateNewsDto) {
   @ApiProperty({
@@ -28,5 +28,6 @@ export class UpdateNewsDto extends PartialType(CreateNewsDto) {
     required: false,
   })
   @IsString()
+  @IsOptional()
   subDescription?: string;
 }
