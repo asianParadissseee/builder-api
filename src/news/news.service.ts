@@ -1,9 +1,9 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { News } from './entities/news.entity';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 
 
 @Injectable()
@@ -29,6 +29,8 @@ export class NewsService {
   }
 
   async findOne(id: string) {
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+    if (!isValid) throw new NotFoundException(`Не валидный id.Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
     try {
       return await this.newsModel.findById(id);
     } catch (e) {
@@ -36,19 +38,23 @@ export class NewsService {
     }
   }
 
-  async update(id: number, updateNewsDto: UpdateNewsDto) {
+  async update(id: string, updateNewsDto: UpdateNewsDto) {
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+    if (!isValid) throw new BadRequestException(`Не валидный id.Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
     try {
-      // return await  this.newsModel.updateOne(id, updateNewsDto)
+      return await this.newsModel.findByIdAndUpdate(id, updateNewsDto);
     } catch (e) {
-
+      throw new BadRequestException(`Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
     }
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+    if (!isValid) throw new BadRequestException(`Не валидный id.Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
     try {
-      return await this.newsModel.deleteOne({ id });
+      return await this.newsModel.findByIdAndDelete(id);
     } catch (e) {
-
+      throw new BadRequestException(`Ошибка получение новости с ${id}, либо новость с таким ${id} не найдено`);
     }
   }
 }
