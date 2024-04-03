@@ -6,7 +6,7 @@ export class CreateNewsDto {
     description: 'URL картинки',
     type: 'string',
   })
-  @IsOptional()
+  @IsOptional() // если поле пустое значение все равно отправится
    backgroundImage: string;
   @ApiProperty({
     description: 'Заголовок картинки',
