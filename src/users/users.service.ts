@@ -11,6 +11,9 @@ export class UsersService {
 
   }
 
+  async findByEmail(email: string) {
+    return this.usersModel.findOne({ email });
+  }
 
   async create(createUserDto: CreateUserDto) {
     try {
